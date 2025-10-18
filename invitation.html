@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitation 🎂</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #080228, #11023f);
+      color: white;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.15);
+      padding: 30px 50px;
+      border-radius: 20px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      animation: appear 1s ease;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      color: #FFD700;
+    }
+
+    button {
+      background-color: white;
+      color: #333;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #FFD700;
+      transform: scale(1.05);
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+
+  <div class="card">
+    <h1>🎂 55 ans ça se fête 🎂</h1>
+    <p>Tu es invité à fêter ton anniversaire au restaurant avec moi 🍽️</p>
+    <p>📅 <strong>Samedi 25 à 13h</strong></p>
+    <p>📍 Lieu : <em>Saveur d'Urfa</em> 😎</p>
+    <p>Dress code : 👔 Classe comme d'habitude</p>
+
+    <button onclick="alert('Super ! Hâte de te voir 😎')">Je confirme ma présence 🎉</button>
+  </div>
+
+  <script>
+    // Confettis dorés 🎊
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const confettis = [];
+
+    function random(min, max) { return Math.random() * (max - min) + min; }
+
+    for (let i = 0; i < 150; i++) {
+      confettis.push({
+        x: random(0, canvas.width),
+        y: random(0, canvas.height),
+        r: random(3, 6),
+        dx: random(-1, 1),
+        dy: random(1, 3),
+        color: '#FFD700' // doré
+      });
+    }
+
+    function drawConfettis() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettis.forEach(c => {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, 2 * Math.PI);
+        ctx.fillStyle = c.color;
+        ctx.fill();
+        c.x += c.dx;
+        c.y += c.dy;
+        if (c.y > canvas.height) c.y = 0;
+      });
+      requestAnimationFrame(drawConfettis);
+    }
+    drawConfettis();
+  </script>
+</body>
+</html>
